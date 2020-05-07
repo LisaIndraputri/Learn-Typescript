@@ -1,11 +1,20 @@
-const button = document.querySelector("button")! as HTMLElement;
-const input1 = document.getElementById("num1")! as HTMLInputElement;
-const input2 = document.getElementById("num2")! as HTMLInputElement;
+class ProjectInput {
+  templateElement: HTMLTemplateElement;
+  hostElement: HTMLDivElement;
+  element: HTMLFormElement;
 
-function add(num1: number, num2: number) {
-  return num1 + num2;
+  constructor () {
+    this.templateElement = document.getElementById('project-input')! as HTMLTemplateElement;
+    this.hostElement = document.getElementById('app')! as HTMLDivElement;
+
+    const importedNode = document.importNode(this.templateElement.content, true);
+    this.element = importedNode.firstElementChild as HTMLFormElement;
+    this.attach();
+  }
+
+  private attach() {
+    this.hostElement.insertAdjacentElement('afterbegin', this.element);
+  }
 }
 
-button.addEventListener("click", function(){
-  console.log(add(+input1.value, +input2.value));
-});
+const projectsInput = new ProjectInput();
